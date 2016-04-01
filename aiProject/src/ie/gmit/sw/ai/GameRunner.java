@@ -40,7 +40,7 @@ public class GameRunner implements KeyListener
         
         JPanel header = new JPanel();
     	header.setLocation(0,0);
-    	header.setSize(1000, 150);
+    	header.setSize(1, 1);
     	header.setBackground(Color.white);
     	header.setVisible(true);
     	view.add(header);
