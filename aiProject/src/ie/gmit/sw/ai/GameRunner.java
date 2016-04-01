@@ -30,7 +30,7 @@ public class GameRunner implements KeyListener
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.addKeyListener(this);
         f.getContentPane().setLayout(new FlowLayout());//new FlowLayout()
-        f.add(view);
+        f.getContentPane().add(view);
         f.setSize(1000,1000);
         f.setLocation(100,100);
         f.pack();
@@ -43,7 +43,7 @@ public class GameRunner implements KeyListener
     	header.setSize(1000, 150);
     	header.setBackground(Color.white);
     	header.setVisible(true);
-    	//view.add(header);
+    	view.add(header);
     	
 	}
 	
