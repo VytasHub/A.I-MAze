@@ -1,8 +1,15 @@
-package ie.gmit.sw.ai;
+package ie.gmit.sw.ai.runner;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+
+import ie.gmit.sw.ai.GameView;
+import ie.gmit.sw.ai.Maze;
+import ie.gmit.sw.ai.Node;
+
+
+
 public class GameRunner implements KeyListener
 {
 	private static final int MAZE_DIMENSION = 100;
@@ -13,6 +20,9 @@ public class GameRunner implements KeyListener
 	
 	public GameRunner() throws Exception
 	{
+		//MazeGeneratorFactory factory = MazeGeneratorFactory.getInstance();
+		//MazeGenerator generator = factory.getMazeGenerator(MazeGenerator.GeneratorAlgorithm.RecursiveBacktracker, 100, 100);
+		
 		Maze m = new Maze(MAZE_DIMENSION, MAZE_DIMENSION);
 		model = m.getMaze();
     	view = new GameView(model);
