@@ -6,7 +6,7 @@ import javax.swing.*;
 public class GameRunner implements KeyListener
 {
 	private static final int MAZE_DIMENSION = 100;
-	private char[][] model;
+	private Node[][] model;
 	private GameView view;
 	private int currentRow;
 	private int currentCol;
@@ -51,7 +51,7 @@ public class GameRunner implements KeyListener
 	{   	
     	currentRow = (int) (MAZE_DIMENSION * Math.random());
     	currentCol = (int) (MAZE_DIMENSION * Math.random());
-    	model[currentRow][currentCol] = 'E';
+    	model[currentRow][currentCol].setState('E');
     	updateView(); 		
 	}
 	
@@ -97,10 +97,10 @@ public class GameRunner implements KeyListener
 	private boolean isValidMove(int r, int c)
 	{
 		//Allows player to collect colectables
-		if (r <= model.length - 1 && c <= model[r].length - 1 && model[r][c] == ' ' || model[r][c] == '?'|| model[r][c] == 'B'|| model[r][c] == 'H'|| model[r][c] == 'W'  )
+		if (r <= model.length - 1 && c <= model[r].length - 1 && model[r][c].getState() == ' ' || model[r][c].getState() == '?'|| model[r][c].getState() == 'B'|| model[r][c].getState() == 'H'|| model[r][c].getState() == 'W'  )
 		{
-			model[currentRow][currentCol] = ' ';
-			model[r][c] = 'E';
+			model[currentRow][currentCol].setState(' ');
+			model[r][c].setState('E');
 			return true;
 		}
 		else

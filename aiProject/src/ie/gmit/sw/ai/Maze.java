@@ -2,11 +2,11 @@ package ie.gmit.sw.ai;
 
 public class Maze 
 {
-	private char[][] maze;
+	private Node[][] maze;
 	
 	public Maze(int rows, int cols)
 	{
-		maze = new char[rows][cols];
+		maze = new Node[rows][cols];
 		init();
 		buildMaze();
 		
@@ -23,7 +23,8 @@ public class Maze
 		{
 			for (int col = 0; col < maze[row].length; col++)
 			{
-				maze[row][col] = 'X';
+				maze[row][col] = new Node(row,col);
+				maze[row][col].setState('X');
 			}
 		}
 	}
@@ -36,9 +37,9 @@ public class Maze
 			int row = (int) (maze.length * Math.random());
 			int col = (int) (maze[0].length * Math.random());
 			
-			if (maze[row][col] == replace)
+			if (maze[row][col].getState() == replace)
 			{
-				maze[row][col] = feature;
+				maze[row][col].setState(feature);
 				counter++;
 			}
 		}
@@ -54,17 +55,17 @@ public class Maze
 				int num = (int) (Math.random() * 10);
 				if (num >= 5 && col + 1 < maze[row].length - 1)
 				{
-					maze[row][col + 1] = ' ';
+					maze[row][col + 1].setState(' ');
 					continue;
 				}
 				if (row + 1 < maze.length){ //Check south
-					maze[row + 1][col] = ' ';
+					maze[row + 1][col].setState(' ');
 				}				
 			}
 		}	
 	}
 	
-	public char[][] getMaze()
+	public Node[][] getMaze()
 	{
 		return this.maze;
 	}

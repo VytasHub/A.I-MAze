@@ -12,7 +12,7 @@ public class GameView extends JPanel implements ActionListener
 	private static final int IMAGE_COUNT = 8; //If adding image need to increase by 1
 	private int cellspan = 5;	
 	private int cellpadding = 2;
-	private char[][] maze;
+	private Node[][] maze;
 	private BufferedImage[] images;
 	private int enemy_state = 5;
 	private Timer timer;
@@ -21,7 +21,7 @@ public class GameView extends JPanel implements ActionListener
 	private boolean zoomOut = false;
 	private int imageIndex = -1;
 	
-	public GameView(char[][] maze) throws Exception
+	public GameView(Node[][] maze) throws Exception
 	{
 		init();
 		this.maze = maze;
@@ -83,7 +83,7 @@ public class GameView extends JPanel implements ActionListener
        		
         		if (zoomOut)
         		{
-        			ch = maze[row][col];
+        			ch = maze[row][col].getState();
         			if (row == currentRow && col == currentCol)
         			{
         				g2.setColor(Color.YELLOW);
@@ -93,7 +93,7 @@ public class GameView extends JPanel implements ActionListener
         		}
         		else
         		{
-        			ch = maze[currentRow - cellpadding + row][currentCol - cellpadding + col];
+        			ch = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
         		}
         		
         		
