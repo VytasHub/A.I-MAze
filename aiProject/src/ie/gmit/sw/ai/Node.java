@@ -64,10 +64,10 @@ public class Node
 	public Node[] children(Node[][] maze){
 		
 		Node[] children = new Node[MAX_EXITS];
-		if (col - 1 >=0 && passage == NodePassage.West) children[0] = maze[row][col - 1]; //A West edge
-		if (col + 1 < maze[row].length && maze[row][col + 1].getPassage() == NodePassage.West) children[1] = maze[row][col + 1]; //An East Edge
-		if (row - 1 >= 0 && passage == NodePassage.North) children[2] = maze[row - 1][col]; //A North edge
-		if (row + 1 < maze.length && maze[row + 1][col].getPassage() == NodePassage.North) children[3] = maze[row + 1][col]; //An South Edge
+		if (col - 1 >=0 && maze[row][col - 1].getState() != 'W') children[0] = maze[row][col - 1]; //A West edge
+		if (col + 1 < maze[row].length && maze[row][col + 1].getState() != 'W') children[1] = maze[row][col + 1]; //An East Edge
+		if (row - 1 >= 0 && maze[row-1][col].getState() != 'W') children[2] = maze[row - 1][col]; //A North edge
+		if (row + 1 < maze.length && maze[row + 1][col].getState() != 'W') children[3] = maze[row + 1][col]; //An South Edge
 	
 		int counter = 0;
 		for (int i = 0; i < children.length; i++) {
@@ -136,10 +136,14 @@ public class Node
 		this.distance = distance;
 	}
 
-	public String toString() {
-		if (passage == NodePassage.North){
+	public String toString() 
+	{
+		if (passage == NodePassage.North)
+		{
 			return "N ";
-		}else{
+		}
+		else
+		{
 			return "W ";
 		}
 	}

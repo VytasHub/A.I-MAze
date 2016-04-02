@@ -32,7 +32,7 @@ public class GameRunner implements KeyListener
     	
     	//Traversator t = new BruteForceTraversator(true);
     	Traversator rw = new RandomWalk();
-    	rw.traverse(model, model[0][0],view);
+    	rw.traverse(model, model[5][5],view);
     	//goal = model[10][10];
     	//BruteForceTraversator search = new BruteForceTraversator(true);
     	//search.traverse(model, model[5][5]);
