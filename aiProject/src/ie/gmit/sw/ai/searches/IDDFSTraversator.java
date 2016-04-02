@@ -31,8 +31,9 @@ public class IDDFSTraversator implements Traversator{
 		node.setVisited(true);	
 		visitCount++;
 		viewer.repaint();
-		
-		if (node.isGoalNode()){
+		//node.getState() == 'G'
+		//node.isGoalNode()
+		if (node.getState() == 'G'){
 	        time = System.currentTimeMillis() - time; //Stop the clock
 	        TraversatorStats.printStats(node, time, visitCount);
 	        viewer.repaint();
@@ -40,11 +41,11 @@ public class IDDFSTraversator implements Traversator{
 			return;
 		}
 		
-		try { //Simulate processing each expanded node
-			Thread.sleep(1);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try { //Simulate processing each expanded node
+//			Thread.sleep(1);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		Node[] children = node.children(maze);
 		for (int i = 0; i < children.length; i++) {

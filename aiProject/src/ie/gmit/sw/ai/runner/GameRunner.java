@@ -5,7 +5,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import ie.gmit.sw.ai.*;
-
+import ie.gmit.sw.ai.searches.BruteForceTraversator;
+import ie.gmit.sw.ai.searches.DepthLimitedDFSTraversator;
+import ie.gmit.sw.ai.searches.IDDFSTraversator;
 import ie.gmit.sw.ai.searches.RandomWalk;
 import ie.gmit.sw.ai.searches.Traversator;
 
@@ -32,7 +34,10 @@ public class GameRunner implements KeyListener
     	
     	//Traversator t = new BruteForceTraversator(true);
     	Traversator rw = new RandomWalk();
-    	rw.traverse(model, model[5][5],view);
+    	Traversator bft = new BruteForceTraversator(true);
+    	Traversator iddfstt = new IDDFSTraversator();
+    	Traversator dldfst = new DepthLimitedDFSTraversator(model.length);
+    	dldfst.traverse(model, model[5][5],view);
     	//goal = model[10][10];
     	//BruteForceTraversator search = new BruteForceTraversator(true);
     	//search.traverse(model, model[5][5]);
