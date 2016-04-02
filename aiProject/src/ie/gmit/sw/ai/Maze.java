@@ -1,7 +1,14 @@
 package ie.gmit.sw.ai;
 
+import java.util.Random;
+
+import ie.gmit.sw.ai.Node;
+
+
+
 public class Maze 
 {
+	private Node goal;
 	private Node[][] maze;
 	
 	public Maze(int rows, int cols)
@@ -9,7 +16,8 @@ public class Maze
 		maze = new Node[rows][cols];
 		init();
 		buildMaze();
-		
+		setGoalNode();
+	
 		int featureNumber = (int)((rows * cols) * 0.01);
 		addFeature('W', 'X', featureNumber);
 		addFeature('?', 'X', featureNumber);
@@ -63,6 +71,22 @@ public class Maze
 				}				
 			}
 		}	
+	}
+	
+	public void setGoalNode() 
+	{
+		Random generator = new Random();
+		int randRow = generator.nextInt(maze.length);
+		int randCol = generator.nextInt(maze[0].length);
+		maze[randRow][randCol].setGoalNode(true);
+		goal = maze[randRow][randCol];
+		maze[randRow][randCol].setState('G');
+		
+	}
+
+	public Node getGoalNode() 
+	{
+		return goal;
 	}
 	
 	public Node[][] getMaze()

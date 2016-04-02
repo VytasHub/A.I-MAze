@@ -58,7 +58,8 @@ public class Node {
 	}
 
 	
-	public boolean hasDirection(Direction direction){	
+	public boolean hasDirection(Direction direction)
+	{	
 		for (int i = 0; i < paths.length; i++) {
 			if (paths[i] == direction) return true;
 		}

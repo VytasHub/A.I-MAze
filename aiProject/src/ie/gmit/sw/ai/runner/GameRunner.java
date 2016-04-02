@@ -4,16 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import ie.gmit.sw.ai.GameView;
-import ie.gmit.sw.ai.Maze;
-import ie.gmit.sw.ai.Node;
-
+import ie.gmit.sw.ai.*;
+import ie.gmit.sw.ai.searches.BruteForceTraversator;
 
 
 public class GameRunner implements KeyListener
 {
 	private static final int MAZE_DIMENSION = 100;
 	private Node[][] model;
+	private Node goal;
 	private GameView view;
 	private int currentRow;
 	private int currentCol;
@@ -24,8 +23,18 @@ public class GameRunner implements KeyListener
 		//MazeGenerator generator = factory.getMazeGenerator(MazeGenerator.GeneratorAlgorithm.RecursiveBacktracker, 100, 100);
 		
 		Maze m = new Maze(MAZE_DIMENSION, MAZE_DIMENSION);
+		//goal = model[10][10];
+		
 		model = m.getMaze();
-    	view = new GameView(model);
+    	view = new GameView(model,goal);
+    	
+    	//Traversator t = new BruteForceTraversator();
+    	//goal = model[10][10];
+    	//BruteForceTraversator search = new BruteForceTraversator(true);
+    	//search.traverse(model, model[5][5]);
+    	
+    	//search.traverse(model, model[5][5]);
+    	
     	
     	placePlayer();
     	

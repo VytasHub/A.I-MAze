@@ -21,7 +21,7 @@ public class GameView extends JPanel implements ActionListener
 	private boolean zoomOut = false;
 	private int imageIndex = -1;
 	
-	public GameView(Node[][] maze) throws Exception
+	public GameView(Node[][] maze,Node goal) throws Exception
 	{
 		init();
 		this.maze = maze;
