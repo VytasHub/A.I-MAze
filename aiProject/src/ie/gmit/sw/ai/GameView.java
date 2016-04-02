@@ -9,7 +9,7 @@ public class GameView extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final int DEFAULT_VIEW_SIZE = 800;	
-	private static final int IMAGE_COUNT = 8; //If adding image need to increase by 1
+	private static final int IMAGE_COUNT = 9; //If adding image need to increase by 1
 	private int cellspan = 5;	
 	private int cellpadding = 2;
 	private Node[][] maze;
@@ -121,6 +121,10 @@ public class GameView extends JPanel implements ActionListener
         		{
         			imageIndex = 7;;
         		}
+        		else if (ch == 'G')//G for Goal paints Goal Node black
+        		{
+        			imageIndex = 8;;
+        		}
         		else if (ch == 'E')
         		{
         			imageIndex = enemy_state;;       			
@@ -173,5 +177,6 @@ public class GameView extends JPanel implements ActionListener
 		images[5] = ImageIO.read(new java.io.File("resources/spider_down.png"));
 		images[6] = ImageIO.read(new java.io.File("resources/spider_up.png"));
 		images[7] = ImageIO.read(new java.io.File("resources/empty.png"));
+		images[8] = ImageIO.read(new java.io.File("resources/goal.png"));
 	}
 }
