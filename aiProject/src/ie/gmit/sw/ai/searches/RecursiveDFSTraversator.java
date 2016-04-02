@@ -1,6 +1,8 @@
 package ie.gmit.sw.ai.searches;
 
 
+import java.awt.Component;
+
 import ie.gmit.sw.ai.*;
 
 public class RecursiveDFSTraversator implements Traversator
@@ -43,4 +45,6 @@ public class RecursiveDFSTraversator implements Traversator
 			}
 		}
 	}
+
+	
 }

@@ -5,6 +5,7 @@ package ie.gmit.sw.ai.searches;
 //import ie.gmit.sw.ai.audio.SoundEffects;
 import ie.gmit.sw.ai.*;
 
+import java.awt.Component;
 import java.util.*;
 public class BruteForceTraversator implements Traversator{
 	private boolean dfs = false;
@@ -14,7 +15,8 @@ public class BruteForceTraversator implements Traversator{
 		//SoundEffects.init();
 	}
 	
-	public void traverse(Node[][] maze, Node node) {
+	public void traverse(Node[][] maze, Node node) 
+	{
         long time = System.currentTimeMillis();
     	int visitCount = 0;
     	
@@ -23,6 +25,7 @@ public class BruteForceTraversator implements Traversator{
 		
 		while (!queue.isEmpty()){
 			node = queue.poll();
+			System.out.println(node);
 			
 			node.setVisited(true);
 			visitCount++;

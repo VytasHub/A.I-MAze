@@ -6,20 +6,9 @@ import java.awt.Color;
 
 
 
-public class Node {
-	public enum Direction {North, South, East, West};
-	private Node parent;
-	private Color color = Color.BLACK;
-	private Direction[] paths = null;
-	public boolean visited =  false;
-	public boolean goal;
-	private int row = -1;
-	private int col = -1;
-	private int distance;
+public class Node 
+{
 	private char state;
-	
-	
-
 	public char getState() {
 		return state;
 	}
@@ -28,6 +17,19 @@ public class Node {
 		this.state = state;
 	}
 
+	private static final int MAX_EXITS = 4;
+	public enum NodeType{Wall, Passage};
+	public enum NodePassage{North, South, East, West, None};
+	private Node parent;
+	private Color color = Color.BLACK;
+	private NodeType type = NodeType.Wall;
+	private NodePassage passage = NodePassage.None;
+	public boolean visited =  false;
+	public boolean goal;
+	private int row = -1;
+	private int col = -1;
+	private int distance;
+	
 	public Node(int row, int col) {
 		this.row = row;
 		this.col = col;
@@ -57,53 +59,45 @@ public class Node {
 		this.color = color;
 	}
 
+	public Node[] children(Node[][] maze){
+		
+		Node[] children = new Node[MAX_EXITS];
+		if (col - 1 >=0 && passage == NodePassage.West) children[0] = maze[row][col - 1]; //A West edge
+		if (col + 1 < maze[row].length && maze[row][col + 1].getPassage() == NodePassage.West) children[1] = maze[row][col + 1]; //An East Edge
+		if (row - 1 >= 0 && passage == NodePassage.North) children[2] = maze[row - 1][col]; //A North edge
+		if (row + 1 < maze.length && maze[row + 1][col].getPassage() == NodePassage.North) children[3] = maze[row + 1][col]; //An South Edge
 	
-	public boolean hasDirection(Direction direction)
-	{	
-		for (int i = 0; i < paths.length; i++) {
-			if (paths[i] == direction) return true;
+		int counter = 0;
+		for (int i = 0; i < children.length; i++) {
+			if (children[i] != null) counter++;
 		}
-		return false;
-	}
-	
-	public Node[] children(Node[][] maze){		
-		java.util.List<Node> children = new java.util.ArrayList<Node>();
-				
-		if (row > 0 && maze[row - 1][col].hasDirection(Direction.South)) children.add(maze[row - 1][col]); //Add North
-		if (row < maze.length - 1 && maze[row + 1][col].hasDirection(Direction.North)) children.add(maze[row + 1][col]); //Add South
-		if (col > 0 && maze[row][col - 1].hasDirection(Direction.East)) children.add(maze[row][col - 1]); //Add West
-		if (col < maze[row].length - 1 && maze[row][col + 1].hasDirection(Direction.West)) children.add(maze[row][col + 1]); //Add East
 		
-		return (Node[]) children.toArray(new Node[children.size()]);
-	}
-
-	public Node[] adjacentNodes(Node[][] maze){
-		java.util.List<Node> adjacents = new java.util.ArrayList<Node>();
-		
-		if (row > 0) adjacents.add(maze[row - 1][col]); //Add North
-		if (row < maze.length - 1) adjacents.add(maze[row + 1][col]); //Add South
-		if (col > 0) adjacents.add(maze[row][col - 1]); //Add West
-		if (col < maze[row].length - 1) adjacents.add(maze[row][col + 1]); //Add East
-		
-		return (Node[]) adjacents.toArray(new Node[adjacents.size()]);
-	}
-	
-	public Direction[] getPaths() {
-		return paths;
-	}
-
-	public void addPath(Direction direction) {
+		Node[] tmp = new Node[counter];
 		int index = 0;
-		if (paths == null){
-			paths = new Direction[index + 1];		
-		}else{
-			index = paths.length;
-			Direction[] temp = new Direction[index + 1];
-			for (int i = 0; i < paths.length; i++) temp[i] = paths[i];
-			paths = temp;
+		for (int i = 0; i < children.length; i++) {
+			if (children[i] != null){
+				tmp[index] = children[i];
+				index++;
+			}
 		}
-		
-		paths[index] = direction;
+
+		return tmp;
+	}
+	
+	public NodeType getType() {
+		return type;
+	}
+	
+	public void setType(NodeType type) {
+		this.type = type;
+	}
+
+	public NodePassage getPassage() {
+		return passage;
+	}
+
+	public void setPassage(NodePassage passage) {
+		this.passage = passage;
 	}
 
 	public boolean isVisited() {
@@ -111,7 +105,7 @@ public class Node {
 	}
 
 	public void setVisited(boolean visited) {
-		this.color = Color.BLUE;
+		this.color = Color.LIGHT_GRAY;
 		this.visited = visited;
 	}
 
@@ -130,6 +124,7 @@ public class Node {
 		double y2 = goal.getRow();
 		return (int) Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
 	}
+
 	
 	public int getPathCost() {
 		return distance;
@@ -140,6 +135,10 @@ public class Node {
 	}
 
 	public String toString() {
-		return "[" + row + "/" + col + "]";
+		if (passage == NodePassage.North){
+			return "N ";
+		}else{
+			return "W ";
+		}
 	}
 }
