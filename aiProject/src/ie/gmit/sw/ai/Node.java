@@ -9,11 +9,13 @@ import java.awt.Color;
 public class Node 
 {
 	private char state;
-	public char getState() {
+	public char getState() 
+	{
 		return state;
 	}
 
-	public void setState(char state) {
+	public void setState(char state) 
+	{
 		this.state = state;
 	}
 

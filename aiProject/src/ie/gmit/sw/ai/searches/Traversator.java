@@ -6,5 +6,5 @@ import ie.gmit.sw.ai.Node;
 
 public interface Traversator 
 {
-	public void traverse(Node[][] maze, Node start);
+	public void traverse(Node[][] maze, Node start, Component viewer);
 }

@@ -5,7 +5,8 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import ie.gmit.sw.ai.*;
-import ie.gmit.sw.ai.searches.BruteForceTraversator;
+
+import ie.gmit.sw.ai.searches.RandomWalk;
 import ie.gmit.sw.ai.searches.Traversator;
 
 
@@ -29,12 +30,14 @@ public class GameRunner implements KeyListener
 		model = m.getMaze();
     	view = new GameView(model,goal);
     	
-    	Traversator t = new BruteForceTraversator(true);
+    	//Traversator t = new BruteForceTraversator(true);
+    	Traversator rw = new RandomWalk();
+    	rw.traverse(model, model[0][0],view);
     	//goal = model[10][10];
     	//BruteForceTraversator search = new BruteForceTraversator(true);
     	//search.traverse(model, model[5][5]);
     	
-    	t.traverse(model, model[0][0]);
+    	//t.traverse(model, model[0][0]);
     	
     	
     	placePlayer();
