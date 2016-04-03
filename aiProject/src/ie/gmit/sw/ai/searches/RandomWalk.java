@@ -9,11 +9,7 @@ public class RandomWalk implements Traversator
 	public void traverse(Node[][] maze, Node node, Component viewer) 
 	{
 		
-		//System.out.println(maze.length);
-//		for (int i = 0; i < maze.length; i++) 
-//		{
-//			System.out.println(i+" Element "+maze[i][5].getState());
-//		}
+	
         long time = System.currentTimeMillis();
     	int visitCount = 0;
     	   	
@@ -27,11 +23,11 @@ public class RandomWalk implements Traversator
 		while(visitCount <= steps && node != null)
 		{	
 			
-			//System.out.println("State " + node.getState());
+		
 			node.setVisited(true);	
 			
 			visitCount++;
-			//System.out.println("Walking1 "+visitCount);
+			
 			if (visitCount % 10 == 0) viewer.repaint();
 			//node.isGoalNode()
 			//node.getState() == 'G'
@@ -57,7 +53,6 @@ public class RandomWalk implements Traversator
 			//Pick a random adjacent node
 			
         	Node[] children = node.children(maze);
-        	System.out.println(children.length);
         	node = children[(int)(children.length * Math.random())];
         	
         	

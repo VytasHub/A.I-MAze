@@ -37,7 +37,7 @@ public class GameRunner implements KeyListener
     	Traversator bft = new BruteForceTraversator(true);
     	Traversator iddfstt = new IDDFSTraversator();
     	Traversator dldfst = new DepthLimitedDFSTraversator(model.length);
-    	dldfst.traverse(model, model[5][5],view);
+    	rw.traverse(model, model[5][5],view);
     	//goal = model[10][10];
     	//BruteForceTraversator search = new BruteForceTraversator(true);
     	//search.traverse(model, model[5][5]);
