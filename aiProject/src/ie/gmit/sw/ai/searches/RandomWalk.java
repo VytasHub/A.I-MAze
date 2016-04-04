@@ -13,7 +13,7 @@ public class RandomWalk implements Traversator
         long time = System.currentTimeMillis();
     	int visitCount = 0;
     	   	
-		int steps = (int) Math.pow(maze.length, 2) * 3;//Original was 2  but wouldn't always find the goal node so increased number of steps
+		int steps = (int) Math.pow(maze.length, 2) * 5;//Original was 2  but wouldn't always find the goal node so increased number of steps
 		System.out.println("Number of steps allowed: " + steps);
 	
 		System.out.println("visitCount " + visitCount);

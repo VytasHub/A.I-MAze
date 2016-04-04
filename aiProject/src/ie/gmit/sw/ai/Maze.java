@@ -23,6 +23,7 @@ public class Maze
 		addFeature('?', 'X', featureNumber);
 		addFeature('B', 'X', featureNumber);
 		addFeature('H', 'X', featureNumber);
+		addFeature('I', 'X', featureNumber);
 	}
 	
 	private void init()

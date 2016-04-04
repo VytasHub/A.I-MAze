@@ -31,18 +31,12 @@ public class GameRunner implements KeyListener
 		
 		model = m.getMaze();
     	view = new GameView(model,goal);
+    	view.setBounds(99, 5, 800, 800);//Originally
     	
-    	//Traversator t = new BruteForceTraversator(true);
+    	
     	Traversator rw = new RandomWalk();
-    	Traversator bft = new BruteForceTraversator(true);
-    	Traversator iddfstt = new IDDFSTraversator();
-    	Traversator dldfst = new DepthLimitedDFSTraversator(model.length);
     	rw.traverse(model, model[5][5],view);
-    	//goal = model[10][10];
-    	//BruteForceTraversator search = new BruteForceTraversator(true);
-    	//search.traverse(model, model[5][5]);
-    	
-    	//t.traverse(model, model[0][0]);
+    
     	
     	
     	placePlayer();
@@ -57,21 +51,26 @@ public class GameRunner implements KeyListener
     	JFrame f = new JFrame("GMIT - B.Sc. in Computing (Software Development)");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.addKeyListener(this);
-        f.getContentPane().setLayout(new FlowLayout());//new FlowLayout()
+        f.getContentPane().setLayout(null);
+        
+        JPanel panel = new JPanel();
+        panel.setBackground(Color.BLUE);
+        panel.setBounds(10, 11, 85, 591);
+        f.getContentPane().add(panel);
         f.getContentPane().add(view);
         f.setSize(1000,1000);
         f.setLocation(100,100);
-        f.pack();
+        //f.pack();//Bad guy packs it all together
         f.setVisible(true);
         //f.add(header);
         
         
-        JPanel header = new JPanel();
-    	header.setLocation(0,0);
-    	header.setSize(1, 1);
-    	header.setBackground(Color.white);
-    	header.setVisible(true);
-    	view.add(header);
+//        JPanel header = new JPanel();
+//    	header.setLocation(0,0);
+//    	header.setSize(1, 1);
+//    	header.setBackground(Color.white);
+//    	header.setVisible(true);
+//    	view.add(header);
     	
 	}
 	

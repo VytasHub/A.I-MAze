@@ -9,7 +9,7 @@ public class GameView extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
 	public static final int DEFAULT_VIEW_SIZE = 800;	
-	private static final int IMAGE_COUNT = 9; //If adding image need to increase by 1
+	private static final int IMAGE_COUNT = 10; //If adding image need to increase by 1
 	private int cellspan = 5;	
 	private int cellpadding = 2;
 	private Node[][] maze;
@@ -87,9 +87,14 @@ public class GameView extends JPanel implements ActionListener
         			if (row == currentRow && col == currentCol)
         			{
         				g2.setColor(Color.YELLOW);
-        				g2.fillRect(x1, y1, size, size);
+        				g2.fillRect(x1, y1, size,size);
         				continue;
         			}
+        			
+        			
+        		
+        			
+        			
         		}
         		else
         		{
@@ -100,30 +105,94 @@ public class GameView extends JPanel implements ActionListener
         		if (ch == 'X')
         		{        			
         			imageIndex = 0;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.black);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == 'W')
         		{
         			imageIndex = 1;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.green);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
+        			
         		}
         		else if (ch == '?')
         		{
         			imageIndex = 2;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.green);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == 'B')
         		{
         			imageIndex = 3;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.green);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == 'H')
         		{
         			imageIndex = 4;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.green);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
+        		}
+        		else if (ch == 'I')//I for Ifrit
+        		{
+        			
+        			
+        			
+        			imageIndex = 9;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.red);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == ' ')//Need to add state for empty tile if nothing do this
         		{
         			imageIndex = 7;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.gray);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == 'G')//G for Goal paints Goal Node black
         		{
         			imageIndex = 8;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.white);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
         		}
         		else if (ch == 'E')
         		{
@@ -149,7 +218,9 @@ public class GameView extends JPanel implements ActionListener
 	
 	public void toggleZoom()
 	{
-		zoomOut = !zoomOut;		
+		zoomOut = !zoomOut;	
+		
+		
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -178,5 +249,6 @@ public class GameView extends JPanel implements ActionListener
 		images[6] = ImageIO.read(new java.io.File("resources/spider_up.png"));
 		images[7] = ImageIO.read(new java.io.File("resources/empty.png"));
 		images[8] = ImageIO.read(new java.io.File("resources/goal.png"));
+		images[9] = ImageIO.read(new java.io.File("resources/Ifrit.png"));
 	}
 }
