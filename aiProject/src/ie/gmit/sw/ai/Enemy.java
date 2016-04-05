@@ -1,5 +1,6 @@
 package ie.gmit.sw.ai;
 
+import java.util.Random;
 import java.util.TimerTask;
 
 import ie.gmit.sw.ai.runner.GameRunner;
@@ -59,8 +60,26 @@ public class Enemy extends TimerTask {
 			System.out.println("New Pos: row: " + currentNode.getRow() + ",col: " + currentNode.getCol());
 		} else {
 			System.out.println("No positions to pop.");
-			traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
+			traversator = new BestFirstTraversator(currentNode, randPos(), globMaze);
 		}
+	}
+	
+	private Node randPos(){
+		Random random = new Random();
+		boolean foundPos = false;
+		int row = 0;
+		int col = 0;
+
+		do {
+			row = random.nextInt(globMaze.length - 4) + 2;
+			col = random.nextInt(globMaze.length - 4) + 2;
+
+			if (globMaze[row][col].getState() != 'W') {
+				foundPos = true;
+			}
+		} while (!foundPos);
+
+		return new Node(row, col);
 	}
 
 	@Override

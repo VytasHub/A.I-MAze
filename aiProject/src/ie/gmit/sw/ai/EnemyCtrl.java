@@ -21,6 +21,15 @@ public class EnemyCtrl {
 	}
 
 	public void createEnemy() {
+		Node currentNode = randPos();
+		
+		GameRunner.printPos("EnemyCtrl", goalNode);
+		Enemy enemy = new Enemy(currentNode, goalNode, globMaze);
+		
+		timer.schedule(enemy, enemy.getMoveDur(), enemy.getMoveDur());
+	}
+	
+	private Node randPos(){
 		Random random = new Random();
 		boolean foundPos = false;
 		int row = 0;
@@ -35,12 +44,7 @@ public class EnemyCtrl {
 			}
 		} while (!foundPos);
 
-		Node currentNode = new Node(row, col);
-		
-		GameRunner.printPos("EnemyCtrl", goalNode);
-		Enemy enemy = new Enemy(currentNode, goalNode, globMaze);
-		
-		timer.schedule(enemy, enemy.getMoveDur(), enemy.getMoveDur());
+		return new Node(row, col);
 	}
 
 }
