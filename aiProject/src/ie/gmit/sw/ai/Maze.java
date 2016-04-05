@@ -7,12 +7,16 @@ import ie.gmit.sw.ai.Node;
 public class Maze {
 	private Node goal;
 	private Node[][] maze;
+	private Random random;
 
 	public Maze(int rows, int cols) {
 		maze = new Node[rows][cols];
 		init();
 		buildMaze();
 		setGoalNode();
+		addWallCage();
+		
+		random = new Random();
 
 		int featureNumber = (int) ((rows * cols) * 0.01);
 		addFeature('W', 'X', featureNumber);
@@ -30,12 +34,29 @@ public class Maze {
 			}
 		}
 	}
+	
+	private void addWallCage(){
+		for (int row = 0; row < maze.length; row++) {
+			for (int col = 0; col < maze[row].length; col++) {
+				if (row < 2 || row >= maze.length - 2) {
+					maze[row][col].setState('X');
+				}
+				
+				if (col < 2 || col >= maze.length - 2) {
+					maze[row][col].setState('X');
+				}
+			}
+		}
+	}
 
 	private void addFeature(char feature, char replace, int number) {
 		int counter = 0;
 		while (counter < feature) {
-			int row = (int) (maze.length * Math.random());
-			int col = (int) (maze[0].length * Math.random());
+//			int row = (int) (maze.length  * Math.random());
+//			int col = (int) (maze[0].length * Math.random());
+			
+			int row = random.nextInt(maze.length - 4) + 2;
+			int col =random.nextInt(maze[0].length - 4) + 2;
 
 			if (maze[row][col].getState() == replace) {
 				maze[row][col].setState(feature);
@@ -61,8 +82,9 @@ public class Maze {
 
 	public void setGoalNode() {
 		Random generator = new Random();
-		int randRow = generator.nextInt(maze.length);
-		int randCol = generator.nextInt(maze[0].length);
+		int randRow = generator.nextInt(maze.length - 4) + 2;
+		int randCol = generator.nextInt(maze[0].length - 4) + 2;
+		
 		maze[randRow][randCol].setGoalNode(true);
 		goal = maze[randRow][randCol];
 		maze[randRow][randCol].setState('G');

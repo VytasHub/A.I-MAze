@@ -6,6 +6,8 @@ import java.awt.image.*;
 import javax.imageio.*;
 import javax.swing.*;
 
+import ie.gmit.sw.ai.runner.GameRunner;
+
 public class GameView extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	public static final int DEFAULT_VIEW_SIZE = 800;
@@ -65,40 +67,7 @@ public class GameView extends JPanel implements ActionListener {
 				int y1 = row * size;
 
 				char tileState = 'X';
-
-				
-
-				// if zoomed out
-				if (zoomOut) {
-					tileState = maze[row][col].getState();
-				}
-				// if zoomed in
-				else {
-					tileState = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
-				}
-
-				if (row == currentRow && col == currentCol) { // character
-																// (enemy)
-					if (zoomOut) {
-						g2.setColor(Color.BLUE);
-						g2.fillRect(x1, y1, size, size);
-					}
-
-				} 	else	if (maze[row][col].isHasEnemy())// I for Ifrit
-				{
-					imageIndex = 9;
-
-//					System.out.println("Has Enemy!");
-
-					if (zoomOut) {
-						g2.setColor(Color.red);
-						g2.fillRect(x1, y1, size, size);
-						// return;
-					}
-				}
-				
-				
-				else 
+				boolean tileHasEnemy = false;
 
 				//
 				// if (zoomOut) { // zoomed out
@@ -114,22 +83,69 @@ public class GameView extends JPanel implements ActionListener {
 				// cellpadding + col].getState();
 				// } // zoomed in else
 
-				if (tileState == 'X') {	// wall (which is hedge)
-					imageIndex = 0;
+				// if zoomed out
+				if (zoomOut) {
+					tileState = maze[row][col].getState();
+					tileHasEnemy = maze[row][col].isHasEnemy();
+				}
+				// if zoomed in
+				else {
+					tileState = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
+					tileHasEnemy = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].isHasEnemy();
+				}
+
+				// if (maze[row][col].isHasEnemy() && zoomOut) { // I for Ifrit
+				//
+				// GameRunner.printPos("Has Enemy on: ", maze[row][col]);
+				//
+				// if (zoomOut) {
+				//
+				// // return;
+				// }
+				// } else if (
+				// && !zoomOut) {
+				// // GameRunner.printPos("Has Enemy on: ", maze[currentRow -
+				// // cellpadding + row][currentCol - cellpadding + col]);
+				// imageIndex = 9;
+				// }
+
+				// tiles
+				if (tileHasEnemy) {
+					if (zoomOut) {
+						GameRunner.printPos("Enemy Zoomed out: ", new Node(row, col));
+						g2.setColor(Color.RED);
+						g2.fillRect(x1, y1, size, size);
+					}else{
+						imageIndex = 9;
+						GameRunner.printPos("REGULAR VIEW: ", new Node(row, col));
+					}
+				} else if (row == currentRow && col == currentCol) { // character
+																		// (enemy)
+					if (zoomOut) {
+						g2.setColor(Color.BLUE);
+						g2.fillRect(x1, y1, size, size);
+					}
+
+				} else if (tileState == 'X') { // wall (which is hedge)
 					
+
 					if (zoomOut) {
 						g2.setColor(Color.black);
 						g2.fillRect(x1, y1, size, size);
 						// continue;
+					} else{
+						imageIndex = 0;
 					}
 				} else if (tileState == 'W') {
-					imageIndex = 1;
 					
+
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
 						// continue;
 
+					} else{
+						imageIndex = 1;
 					}
 
 				}
@@ -148,7 +164,7 @@ public class GameView extends JPanel implements ActionListener {
 
 				else if (tileState == '?') {
 					imageIndex = 2;
-					
+
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
@@ -157,7 +173,7 @@ public class GameView extends JPanel implements ActionListener {
 					}
 				} else if (tileState == 'B') {
 					imageIndex = 3;
-					
+
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
@@ -166,7 +182,7 @@ public class GameView extends JPanel implements ActionListener {
 					}
 				} else if (tileState == 'H') {
 					imageIndex = 4;
-					
+
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
@@ -226,26 +242,41 @@ public class GameView extends JPanel implements ActionListener {
 				} else {
 					imageIndex = -1;
 				}
-				
+
 				if (!zoomOut) {
 					paintTile(g2, size, x1, y1);
 				}
-				
 
+//				paintEnemy(g2, size, row, col, x1, y1);
 			} // for col
 		} // for row
 	} // class
 
+	// private void paintEnemy(Graphics2D g2, final int size, int row, int col,
+	// int x1, int y1) {
+	// // enemy stuff
+	// if (zoomOut) {
+	// if (maze[row][col].isHasEnemy()) {
+	// g2.setColor(Color.RED);
+	// g2.fillRect(x1, y1, size, size);
+	// }
+	// }else{
+	// if (maze[currentRow - cellpadding + row][currentCol - cellpadding +
+	// col].isHasEnemy()) {
+	// imageIndex = 9;
+	// }
+	// }
+	// }
+
 	private void paintTile(Graphics2D g2, final int size, int x1, int y1) {
-		if (imageIndex >= 0) {	// zoomed in
+		if (imageIndex >= 0) { // zoomed in
 			g2.drawImage(images[imageIndex], x1, y1, null);
-		} else {	// zoomed out
+		} else { // zoomed out
 			// imageIndex = 7;
 			g2.setColor(Color.LIGHT_GRAY);
 			g2.fillRect(x1, y1, size, size);
 		}
 	}
-
 
 	public void toggleZoom() {
 		zoomOut = !zoomOut;

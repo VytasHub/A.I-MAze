@@ -27,11 +27,10 @@ public class Enemy extends TimerTask {
 		this.goalNode = goalNode;
 		this.globMaze = globMaze;
 
-		moveDur = 666;
+		moveDur = 500;
 		GameRunner.printPos("Enemy", goalNode);
 		traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
 		// generate positions
-		traversator.traverse();
 	}
 
 	public double getHealth() {
@@ -60,6 +59,7 @@ public class Enemy extends TimerTask {
 			System.out.println("New Pos: row: " + currentNode.getRow() + ",col: " + currentNode.getCol());
 		} else {
 			System.out.println("No positions to pop.");
+			traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
 		}
 	}
 

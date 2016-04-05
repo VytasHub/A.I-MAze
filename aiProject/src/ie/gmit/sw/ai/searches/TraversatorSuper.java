@@ -17,6 +17,9 @@ public abstract class TraversatorSuper {
 		this.maze = new Node[maze.length][maze[0].length];
 		cloneMaze(maze);
 		positions = new LinkedList<Node>();
+		
+		// TODO: maybe move to child
+		traverse();
 	}
 	
 	private void setGoalNode(){
