@@ -33,17 +33,35 @@ public class Node
 	private int distance;
 	private boolean pathToGoal;
 	//private char visitedByPlayer;
-	private boolean visitedByPlayer;
+	private boolean visitedByPlayer = false;
 	
-	
+	// enemy stuff
+	private Enemy enemy;
+	private boolean hasEnemy;
 
-	
+	public Enemy getEnemy() {
+		return enemy;
+	}
 
-	public boolean isVisitedByPlayer() {
+	public void setEnemy(Enemy enemy) {
+		this.enemy = enemy;
+	}
+
+	public boolean isHasEnemy() {
+		return hasEnemy;
+	}
+
+	public void setHasEnemy(boolean hasEnemy) {
+		this.hasEnemy = hasEnemy;
+	}
+
+	public boolean isVisitedByPlayer() 
+	{
 		return visitedByPlayer;
 	}
 
-	public void setVisitedByPlayer(boolean visitedByPlayer) {
+	public void setVisitedByPlayer(boolean visitedByPlayer) 
+	{
 		this.visitedByPlayer = visitedByPlayer;
 	}
 
