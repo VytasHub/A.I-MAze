@@ -112,12 +112,12 @@ public class GameView extends JPanel implements ActionListener {
 				// tiles
 				if (tileHasEnemy) {
 					if (zoomOut) {
-						GameRunner.printPos("Enemy Zoomed out: ", new Node(row, col));
+//						GameRunner.printPos("Enemy Zoomed out: ", new Node(row, col));
 						g2.setColor(Color.RED);
 						g2.fillRect(x1, y1, size, size);
 					}else{
 						imageIndex = 9;
-						GameRunner.printPos("REGULAR VIEW: ", new Node(row, col));
+//						GameRunner.printPos("REGULAR VIEW: ", new Node(row, col));
 					}
 				} else if (row == currentRow && col == currentCol) { // character
 																		// (enemy)

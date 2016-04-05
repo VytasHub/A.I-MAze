@@ -1,17 +1,21 @@
 package ie.gmit.sw.ai.searches;
 
 import ie.gmit.sw.ai.*;
-
-import java.awt.*;
+import ie.gmit.sw.ai.runner.GameRunner;
 import java.util.*;
-public class BruteForceTraversator implements Traversator{
-	private boolean dfs = false;
+
+public class BruteForceTraversator extends Traversator {
+	private boolean dfs = true;
+
 	
-	public BruteForceTraversator(boolean depthFirst){
+	public BruteForceTraversator(Node currentNode, Node goal, Node[][] maze, boolean depthFirst){
+		super(currentNode, goal, maze);
 		this.dfs = depthFirst;
+		
+		traverse();
 	}
 	
-	public void traverse(Node[][] maze, Node node, Component viewer) {
+	public void traverse() {
         //Start the clock
         long time = System.currentTimeMillis();
     	int visitCount = 0;
@@ -19,26 +23,21 @@ public class BruteForceTraversator implements Traversator{
 		Deque<Node> queue = new LinkedList<Node>();
 		queue.offer(node);
 		
-		while (!queue.isEmpty()){
+		while (!queue.isEmpty() && visitCount < maxPositions){
+//			System.out.println("Visit Count: " + visitCount);
 			node = queue.poll();
+			positions.add(node);
+			
+//			GameRunner.printPos("Brute: ", node);
 			node.setVisited(true);
 			visitCount++;
-			
-			viewer.repaint();
 			
 			if (node.isGoalNode())
 			{
 		        time = System.currentTimeMillis() - time; //Stop the clock
 		        TraversatorStats.printStats(node, time, visitCount);
-		        viewer.repaint();
 				break;
 			}
-			
-//			try { //Simulate processing each expanded node
-//				Thread.sleep(1);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
 			
 			Node[] children = node.children(maze);
 			for (int i = 0; i < children.length; i++) {
@@ -50,7 +49,9 @@ public class BruteForceTraversator implements Traversator{
 						queue.addLast(children[i]);
 					}
 				}									
-			}			
+			}
+			
+			
 		}
 	}
 }

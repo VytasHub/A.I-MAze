@@ -12,9 +12,11 @@ public class Enemy extends TimerTask {
 	private Node goalNode;
 	private Node[][] globMaze;
 
-	private TraversatorSuper traversator;
+	private Traversator traversator;
 
 	private double health;
+	private int evilLvl = 0;
+	public static int MAX_EVIL = 6;
 
 	private int moveDur;
 
@@ -22,16 +24,73 @@ public class Enemy extends TimerTask {
 		return moveDur;
 	}
 
-	public Enemy(Node currentNode, Node goalNode, Node[][] globMaze) {
+	
+	
+	public int getEvilLvl() {
+		return evilLvl;
+	}
+
+
+
+	public void setEvilLvl(int evilLvl) {
+		this.evilLvl = evilLvl;
+	}
+
+
+
+	public Enemy(Node currentNode, Node goalNode, Node[][] globMaze, int evilLvl) {
 		super();
 		this.currentNode = currentNode;
 		this.goalNode = goalNode;
 		this.globMaze = globMaze;
+		this.evilLvl = evilLvl;
 
-		moveDur = 500;
-		GameRunner.printPos("Enemy", goalNode);
-		traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
+		moveDur = 666;
+//		GameRunner.printPos("Enemy", goalNode);
+		createTraversator();
+		
+//		traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
+//		traversator = new BeamTraversator(currentNode,goalNode, globMaze, 2);
+//		traversator = new BasicHillClimbingTraversator(currentNode, goalNode), globMaze);
+//		traversator = new BruteForceTraversator(currentNode, goalNode, globMaze, false);	// DFS on
 		// generate positions
+	}
+	
+	private void createTraversator(){
+		switch (evilLvl) {
+		case 0:	// random walk
+			traversator = new RandomWalk(currentNode, goalNode, globMaze);
+			System.out.println("Created Random Walk Demon");
+			break;
+			
+		case 1:	// brute DFS
+			traversator = new BruteForceTraversator(currentNode, goalNode, globMaze, true);
+			System.out.println("Created Brute Force DFS Demon");
+			break;
+			
+		case 2:	// brute BFS
+			traversator = new BruteForceTraversator(currentNode, goalNode, globMaze, false);
+			System.out.println("Created Brute Force BFS Demon");
+			break;
+			
+		case 3:	// recursive DFS
+			traversator = new RecursiveDFSTraversator(currentNode, goalNode, globMaze);
+			System.out.println("Created Recursive DFS Demon");
+			break;
+			
+		case 4:	// depth limited DFS
+			traversator = new DepthLimitedDFSTraversator(currentNode, goalNode, globMaze, 5);
+			System.out.println("Created Depth Limited DFS Demon");
+			break;
+			
+		case 5:// Iterative deepening DFS
+			traversator = new IDDFSTraversator(currentNode, goalNode, globMaze);
+			System.out.println("Created IDDFS DFS Demon");
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	public double getHealth() {
@@ -57,10 +116,10 @@ public class Enemy extends TimerTask {
 			currentNode = newNode;
 			newNode = null;
 
-			System.out.println("New Pos: row: " + currentNode.getRow() + ",col: " + currentNode.getCol());
+//			System.out.println("New Pos: row: " + currentNode.getRow() + ",col: " + currentNode.getCol());
 		} else {
 			System.out.println("No positions to pop.");
-			traversator = new BestFirstTraversator(currentNode, randPos(), globMaze);
+			createTraversator();
 		}
 	}
 	

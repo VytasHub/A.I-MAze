@@ -3,21 +3,17 @@ package ie.gmit.sw.ai.searches;
 import ie.gmit.sw.ai.Node;
 
 import java.awt.Component;
-public class DepthLimitedDFSTraversator implements Traversator{
-	private Node[][] maze;
-	private Component viewer;
+public class DepthLimitedDFSTraversator extends Traversator{
 	private int limit;
-	private boolean keepRunning = true;
-	private long time = System.currentTimeMillis();
-	private int visitCount = 0;
 	
-	public DepthLimitedDFSTraversator(int limit){
+	public DepthLimitedDFSTraversator(Node currentNode, Node goal, Node[][] maze, int limit){
+		super(currentNode, goal, maze);
 		this.limit = limit;
+		
+		traverse();
 	}
 	
-	public void traverse(Node[][] maze, Node node, Component viewer) {
-		this.maze = maze;
-		this.viewer = viewer;
+	public void traverse() {
 		
 		dfs(node, 1);
 		
@@ -27,24 +23,16 @@ public class DepthLimitedDFSTraversator implements Traversator{
 	}
 	
 	private void dfs(Node node, int depth){
+		positions.add(node);
 		if (!keepRunning || depth > limit) return;
 		
 		node.setVisited(true);	
-		visitCount++;
-		viewer.repaint();
 		
 		if (node.isGoalNode()){
 	        time = System.currentTimeMillis() - time; //Stop the clock
 	        TraversatorStats.printStats(node, time, visitCount);
-	        viewer.repaint();
 	        keepRunning = false;
 			return;
-		}
-		
-		try { //Simulate processing each expanded node
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		
 		Node[] children = node.children(maze);

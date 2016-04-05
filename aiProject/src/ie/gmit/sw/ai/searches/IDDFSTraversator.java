@@ -2,21 +2,19 @@ package ie.gmit.sw.ai.searches;
 
 import ie.gmit.sw.ai.Node;
 
-import java.awt.Component;
-public class IDDFSTraversator implements Traversator{
-	private Node[][] maze;
-	private Component viewer;
-	private boolean keepRunning = true;
-	private long time = System.currentTimeMillis();
-	private int visitCount = 0;
+public class IDDFSTraversator extends Traversator{
+	private int limit;
 	
-	public void traverse(Node[][] maze, Node start, Component viewer) {
-		this.maze = maze;
-		this.viewer = viewer;
-		int limit = 1;
+	public IDDFSTraversator(Node currentNode, Node goal, Node[][] maze) {
+		super(currentNode, goal, maze);
+		this.limit = 1;
 		
+		traverse();
+	}
+	
+	public void traverse() {
 		while(keepRunning){
-			dfs(start, 0, limit);
+			dfs(node, 0, limit);
 			
 			if (keepRunning){
 	      		limit++;       		
@@ -27,25 +25,23 @@ public class IDDFSTraversator implements Traversator{
 	}
 
 	private void dfs(Node node, int depth, int limit){
+		positions.add(node);
+		
+		if (visitCount > maxPositions) {
+			keepRunning = false;
+		}
+		
 		if (!keepRunning || depth > limit) return;		
 		node.setVisited(true);	
 		visitCount++;
-		viewer.repaint();
 		//node.getState() == 'G'
 		//node.isGoalNode()
 		if (node.getState() == 'G'){
 	        time = System.currentTimeMillis() - time; //Stop the clock
 	        TraversatorStats.printStats(node, time, visitCount);
-	        viewer.repaint();
 	        keepRunning = false;
 			return;
 		}
-		
-//		try { //Simulate processing each expanded node
-//			Thread.sleep(1);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
 		
 		Node[] children = node.children(maze);
 		for (int i = 0; i < children.length; i++) {

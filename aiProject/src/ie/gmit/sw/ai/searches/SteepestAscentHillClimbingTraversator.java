@@ -4,14 +4,16 @@ import java.awt.*;
 import java.util.*;
 
 import ie.gmit.sw.ai.*;
-public class SteepestAscentHillClimbingTraversator implements Traversator{
-	private Node goal;
+import ie.gmit.sw.ai.runner.GameRunner;
+public class SteepestAscentHillClimbingTraversator extends Traversator {
 	
-	public SteepestAscentHillClimbingTraversator(Node goal){
-		this.goal = goal;
+	public SteepestAscentHillClimbingTraversator(Node currentNode, Node goal, Node[][] maze){
+		super(currentNode, goal, maze);
+		
+		traverse();
 	}
 	
-	public void traverse(Node[][] maze, Node node, Component viewer) {
+	public void traverse() {
 		LinkedList<Node> queue = new LinkedList<Node>();
 		queue.addFirst(node);
 		
@@ -20,21 +22,14 @@ public class SteepestAscentHillClimbingTraversator implements Traversator{
     	
 		while(!queue.isEmpty()){
 			node = queue.poll();
+			positions.add(node);
 			visitCount++;
 			node.setVisited(true);		
-			viewer.repaint();
 			
 			if (node.isGoalNode()){
 		        time = System.currentTimeMillis() - time; //Stop the clock
-		        TraversatorStats.printStats(node, time, visitCount);
-		        viewer.repaint();
+//		        TraversatorStats.printStats(node, time, visitCount);
 				break;
-			}
-			
-			try { //Simulate processing each expanded node
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 			
 			//Sort the children of the current node in order of increasing h(n)

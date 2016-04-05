@@ -1,22 +1,24 @@
 package ie.gmit.sw.ai.searches;
 
 import ie.gmit.sw.ai.Node;
+import ie.gmit.sw.ai.runner.GameRunner;
 
 import java.awt.Component;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class BeamTraversator implements Traversator{
-	private Node goal;
+public class BeamTraversator extends Traversator{
 	private int beamWidth= 1; 
 	
-	public BeamTraversator(Node goal,  int beamWidth){
-		this.goal = goal;
+	public BeamTraversator(Node currentNode, Node goal, Node[][] maze,  int beamWidth){
+		super(currentNode, goal, maze);
 		this.beamWidth = beamWidth;
+		
+		traverse();
 	}
 	
-	public void traverse(Node[][] maze, Node node, Component viewer) {
+	public void traverse() {
 		LinkedList<Node> queue = new LinkedList<Node>();
 		queue.addFirst(node);
 		
@@ -25,23 +27,16 @@ public class BeamTraversator implements Traversator{
     	
 		while(!queue.isEmpty()){
 			node = queue.poll();
+			positions.add(node);
 			node.setVisited(true);	
 			visitCount++;
-			viewer.repaint();
 			
 			if (node.isGoalNode()){
 		        time = System.currentTimeMillis() - time; //Stop the clock
-		        TraversatorStats.printStats(node, time, visitCount);
-		        viewer.repaint();
+//		        TraversatorStats.printStats(node, time, visitCount);
 				break;
 			}
-			
-			try { //Simulate processing each expanded node
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			
+
 			Node[] children = node.children(maze);
 			Collections.sort(Arrays.asList(children),(Node current, Node next) -> current.getHeuristic(goal) - next.getHeuristic(goal));
 			

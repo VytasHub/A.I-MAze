@@ -36,7 +36,7 @@ public class GameRunner implements KeyListener {
 		placePlayer();
 		
 		enemyCtrl = new EnemyCtrl(new Node(currentRow, currentCol), maze);
-		enemyCtrl.createEnemy();
+		enemyCtrl.createEnemies();
 	}
 
 	public static void printPos(String prefix, Node printNode){
@@ -74,8 +74,9 @@ public class GameRunner implements KeyListener {
 	}
 
 	private void placePlayer() {
-		currentRow = (int) (MAZE_DIMENSION * Math.random());
-		currentCol = (int) (MAZE_DIMENSION * Math.random());
+		Random random = new Random();
+		currentRow = random.nextInt(MAZE_DIMENSION - 4) + 2; //(int) (MAZE_DIMENSION * Math.random());
+		currentCol = random.nextInt(MAZE_DIMENSION - 4) + 2; //(int) (MAZE_DIMENSION * Math.random());
 		maze[currentRow][currentCol].setState('E');
 		updateView();
 	}

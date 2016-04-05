@@ -5,10 +5,12 @@ import ie.gmit.sw.ai.runner.GameRunner;
 
 import java.util.*;
 
-public class BestFirstTraversator extends TraversatorSuper {
+public class BestFirstTraversator extends Traversator {
 
 	public BestFirstTraversator(Node currentNode, Node goal, Node[][] maze) {
 		super(currentNode, goal, maze);
+		
+		traverse();
 	}
 
 	public void traverse() {
@@ -39,16 +41,11 @@ public class BestFirstTraversator extends TraversatorSuper {
 					queue.addFirst(children[i]);
 				}
 			}
-			
-//			System.out.println("Queue.len: " + queue.size());
-//			System.out.println("Goal: " + goal.toString());
-//			System.out.println("First Heuristic: " + queue.getFirst().getHeuristic(goal));
 
 			// Sort the whole queue. Effectively a priority queue, first in,
 			// best out
 			Collections.sort(queue, (Node current, Node next) -> current.getHeuristic(goal) - next.getHeuristic(goal));
 		}
-		GameRunner.printPos("Traversator", goal);
-		System.out.println("Done traverse");
+
 	}
 }
