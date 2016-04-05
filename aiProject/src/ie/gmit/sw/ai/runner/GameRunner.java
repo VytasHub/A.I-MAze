@@ -16,6 +16,7 @@ public class GameRunner implements KeyListener {
 	private GameView view;
 	private int currentRow;
 	private int currentCol;
+	private EnemyCtrl enemyCtrl;
 
 	public GameRunner() throws Exception {
 		// MazeGeneratorFactory factory = MazeGeneratorFactory.getInstance();
@@ -31,32 +32,15 @@ public class GameRunner implements KeyListener {
 		view.setBounds(99, 5, 800, 800);// Originally
 
 		windowsInit();
-
+		
 		placePlayer();
-
-		// placeEnemies();
-		placeEnemy();
+		
+		enemyCtrl = new EnemyCtrl(new Node(currentRow, currentCol), maze);
+		enemyCtrl.createEnemy();
 	}
 
-	private void placeEnemy() {
-		Random random = new Random();
-		boolean foundPos = false;
-		int row = 0;
-		int col = 0;
-
-		do  {
-			row = random.nextInt(maze.length - 4) + 2;
-			col = random.nextInt(maze.length - 4) + 2;
-			
-			if (maze[row][col].getState() != 'W') {
-				foundPos = true;
-			}
-		} while (!foundPos);
-		
-		Node currentNode = new Node(row, col);
-		Node goalNode = new Node(currentRow, currentCol);
-		
-		Enemy enemy1 = new Enemy(currentNode, goalNode, maze);
+	public static void printPos(String prefix, Node printNode){
+		System.out.println(prefix + ",row: " + printNode.getRow() + ", col: " + printNode.getCol());
 	}
 
 	private void windowsInit() {
@@ -96,14 +80,14 @@ public class GameRunner implements KeyListener {
 		updateView();
 	}
 
-	private void placeEnemies() {
-		// BruteForceTraversator bft = new BruteForceTraversator(true);
-		// Traversator t = new DepthLimitedDFSTraversator(model.length*3);
-		// Traversator rw = new RandomWalk();
-		Traversator rw = new IDDFSTraversator();
-		// Traversator t = new RecursiveDFSTraversator();
-		rw.traverse(maze, maze[5][5], view);
-	}
+//	private void placeEnemies() {
+//		// BruteForceTraversator bft = new BruteForceTraversator(true);
+//		// Traversator t = new DepthLimitedDFSTraversator(model.length*3);
+//		// Traversator rw = new RandomWalk();
+//		Traversator rw = new IDDFSTraversator();
+//		// Traversator t = new RecursiveDFSTraversator();
+//		rw.traverse(maze, maze[5][5], view);
+//	}
 
 	private void updateView() {
 		view.setCurrentRow(currentRow);

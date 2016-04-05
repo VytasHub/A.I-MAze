@@ -1,6 +1,8 @@
 package ie.gmit.sw.ai.searches;
 
 import ie.gmit.sw.ai.*;
+import ie.gmit.sw.ai.runner.GameRunner;
+
 import java.util.*;
 
 public class BestFirstTraversator extends TraversatorSuper {
@@ -17,14 +19,15 @@ public class BestFirstTraversator extends TraversatorSuper {
 		int visitCount = 0;
 
 		while (!queue.isEmpty()) {
-			positions.add(node);
 			node = queue.poll();
+			positions.add(node);
 			node.setVisited(true);
 			visitCount++;
 
 			if (node.isGoalNode()) {
 				time = System.currentTimeMillis() - time; // Stop the clock
 				// TraversatorStats.printStats(node, time, visitCount);
+				
 				break;
 			}
 
@@ -35,10 +38,16 @@ public class BestFirstTraversator extends TraversatorSuper {
 					queue.addFirst(children[i]);
 				}
 			}
+			
+//			System.out.println("Queue.len: " + queue.size());
+//			System.out.println("Goal: " + goal.toString());
+//			System.out.println("First Heuristic: " + queue.getFirst().getHeuristic(goal));
 
 			// Sort the whole queue. Effectively a priority queue, first in,
 			// best out
 			Collections.sort(queue, (Node current, Node next) -> current.getHeuristic(goal) - next.getHeuristic(goal));
 		}
+		GameRunner.printPos("Traversator", goal);
+		System.out.println("Done traverse");
 	}
 }

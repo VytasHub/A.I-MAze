@@ -64,39 +64,71 @@ public class GameView extends JPanel implements ActionListener {
 				int x1 = col * size;
 				int y1 = row * size;
 
-				char ch = 'X';
+				char tileState = 'X';
 
-				if (zoomOut) { // zoomed out
-					ch = maze[row][col].getState();
-					if (row == currentRow && col == currentCol) {
-						g2.setColor(Color.YELLOW);
+				
+
+				// if zoomed out
+				if (zoomOut) {
+					tileState = maze[row][col].getState();
+				}
+				// if zoomed in
+				else {
+					tileState = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
+				}
+
+				if (row == currentRow && col == currentCol) { // character
+																// (enemy)
+					if (zoomOut) {
+						g2.setColor(Color.BLUE);
 						g2.fillRect(x1, y1, size, size);
-						continue;
 					}
 
-				} else { // zoomed in
-					ch = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
-				} // zoomed in else
-				
+				} 	else	if (maze[row][col].isHasEnemy())// I for Ifrit
+				{
+					imageIndex = 9;
 
+//					System.out.println("Has Enemy!");
+
+					if (zoomOut) {
+						g2.setColor(Color.red);
+						g2.fillRect(x1, y1, size, size);
+						// return;
+					}
+				}
 				
 				
-				if (ch == 'X') {
+				else 
+
+				//
+				// if (zoomOut) { // zoomed out
+				// ch = maze[row][col].getState();
+				// if (row == currentRow && col == currentCol) {
+				// g2.setColor(Color.YELLOW);
+				// g2.fillRect(x1, y1, size, size);
+				//// continue;
+				// }
+				//
+				// } else { // zoomed in
+				// ch = maze[currentRow - cellpadding + row][currentCol -
+				// cellpadding + col].getState();
+				// } // zoomed in else
+
+				if (tileState == 'X') {	// wall (which is hedge)
 					imageIndex = 0;
-					;
+					
 					if (zoomOut) {
 						g2.setColor(Color.black);
 						g2.fillRect(x1, y1, size, size);
-						continue;
-
+						// continue;
 					}
-				} else if (ch == 'W') {
+				} else if (tileState == 'W') {
 					imageIndex = 1;
-					;
+					
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
-						continue;
+						// continue;
 
 					}
 
@@ -114,31 +146,31 @@ public class GameView extends JPanel implements ActionListener {
 				//
 				// }
 
-				else if (ch == '?') {
+				else if (tileState == '?') {
 					imageIndex = 2;
-					;
+					
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
-						continue;
+						// continue;
 
 					}
-				} else if (ch == 'B') {
+				} else if (tileState == 'B') {
 					imageIndex = 3;
-					;
+					
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
-						continue;
+						// continue;
 
 					}
-				} else if (ch == 'H') {
+				} else if (tileState == 'H') {
 					imageIndex = 4;
-					;
+					
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
-						continue;
+						// continue;
 
 					}
 				}
@@ -155,62 +187,65 @@ public class GameView extends JPanel implements ActionListener {
 				// }
 				// model[currentRow][currentCol].setVisitedByPlayer('V');
 
-				else if (ch == 'I')// I for Ifrit
-				{
-					// TODO: remove
-					imageIndex = 9;
-					;
-					if (zoomOut) {
-						g2.setColor(Color.red);
-						g2.fillRect(x1, y1, size, size);
-						continue;
+				// else if (ch == 'I')// I for Ifrit
+				// {
+				// // TODO: remove
+				// imageIndex = 9;
+				//
+				// if (zoomOut) {
+				// g2.setColor(Color.red);
+				// g2.fillRect(x1, y1, size, size);
+				// continue;
+				// }
 
-					}
-				} else if (ch == ' ')// Need to add state for empty tile if
-										// nothing do this
+				// if (maze[row][col].isHasEnemy()) {
+				//
+				// }
+				// }
+				else if (tileState == ' ')// Need to add state for empty tile if
+											// nothing do this
 				{
 					imageIndex = 7;
-					;
+
 					if (zoomOut) {
 						g2.setColor(Color.gray);
 						g2.fillRect(x1, y1, size, size);
-						continue;
+						// continue;
 
 					}
-				} else if (ch == 'G')// G for Goal paints Goal Node black
+				} else if (tileState == 'G')// G for Goal paints Goal Node black
 				{
 					imageIndex = 8;
-					;
 					if (zoomOut) {
 						g2.setColor(Color.white);
 						g2.fillRect(x1, y1, size, size);
-						continue;
-
+						// continue;
 					}
-				} else if (ch == 'E') {
+				} else if (tileState == 'E') {
 					imageIndex = enemy_state;
-					;
 				} else {
 					imageIndex = -1;
 				}
-
-				if (imageIndex >= 0) {
-					g2.drawImage(images[imageIndex], x1, y1, null);
-				} else {
-					// imageIndex = 7;
-					g2.setColor(Color.LIGHT_GRAY);
-					g2.fillRect(x1, y1, size, size);
-				}
-
-				// TODO: paint enemy
 				
-				if (maze[row][col].hasEnemy()) {
-					
+				if (!zoomOut) {
+					paintTile(g2, size, x1, y1);
 				}
 				
+
 			} // for col
 		} // for row
 	} // class
+
+	private void paintTile(Graphics2D g2, final int size, int x1, int y1) {
+		if (imageIndex >= 0) {	// zoomed in
+			g2.drawImage(images[imageIndex], x1, y1, null);
+		} else {	// zoomed out
+			// imageIndex = 7;
+			g2.setColor(Color.LIGHT_GRAY);
+			g2.fillRect(x1, y1, size, size);
+		}
+	}
+
 
 	public void toggleZoom() {
 		zoomOut = !zoomOut;
