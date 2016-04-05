@@ -9,7 +9,10 @@ import ie.gmit.sw.ai.searches.BruteForceTraversator;
 import ie.gmit.sw.ai.searches.DepthLimitedDFSTraversator;
 import ie.gmit.sw.ai.searches.IDDFSTraversator;
 import ie.gmit.sw.ai.searches.RandomWalk;
+import ie.gmit.sw.ai.searches.RecursiveDFSTraversator;
 import ie.gmit.sw.ai.searches.Traversator;
+import ie.gmit.sw.ai.searches.TraversatorStats;
+
 
 
 public class GameRunner implements KeyListener
@@ -33,9 +36,14 @@ public class GameRunner implements KeyListener
     	view = new GameView(model,goal);
     	view.setBounds(99, 5, 800, 800);//Originally
     	
+    	//BruteForceTraversator bft = new BruteForceTraversator(true);
+    	//Traversator t = new DepthLimitedDFSTraversator(model.length*3);
+    	//Traversator rw = new RandomWalk();
+    	//Traversator rw = new IDDFSTraversator();
+    	//Traversator t = new RecursiveDFSTraversator();
+    	//rw.traverse(model, model[5][5],view);
     	
-    	Traversator rw = new RandomWalk();
-    	rw.traverse(model, model[5][5],view);
+    	
     
     	
     	
@@ -126,8 +134,13 @@ public class GameRunner implements KeyListener
 		//Allows player to collect colectables
 		if (r <= model.length - 1 && c <= model[r].length - 1 && model[r][c].getState() == ' ' || model[r][c].getState() == '?'|| model[r][c].getState() == 'B'|| model[r][c].getState() == 'H'|| model[r][c].getState() == 'W'  )
 		{
+			model[currentRow][currentCol].setVisitedByPlayer(true);
+			System.out.println("Node set "+ model[currentRow][currentCol].isVisitedByPlayer());
 			model[currentRow][currentCol].setState(' ');
 			model[r][c].setState('E');
+			
+			
+			
 			return true;
 		}
 		else

@@ -3,16 +3,28 @@ package ie.gmit.sw.ai.searches;
 import java.awt.Color;
 import ie.gmit.sw.ai.Node;
 //import ie.gmit.sw.ai.audio.*;
-public class TraversatorStats {
+public class TraversatorStats 
+{
 	public static void printStats(Node node, long time, int visitCount)
 	{
+		
+		
 		double depth = 0;
 		
 		while (node != null)
-		{			
+		{		
+			
 			node = node.getParent();
-			if (node != null) node.setColor(Color.YELLOW);
-			depth++;			
+			
+			if (node != null)
+			{
+				node.setColor(Color.YELLOW);
+				node.setPathToGoal(true);
+				System.out.println("The path: "+ depth );
+				
+			}
+			depth++;
+			
 		}
 		
         System.out.println("Visited " + visitCount + " nodes in " + time + "ms.");

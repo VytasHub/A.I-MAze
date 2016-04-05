@@ -26,18 +26,19 @@ public class BruteForceTraversator implements Traversator{
 			
 			viewer.repaint();
 			
-			if (node.isGoalNode()){
+			if (node.isGoalNode())
+			{
 		        time = System.currentTimeMillis() - time; //Stop the clock
 		        TraversatorStats.printStats(node, time, visitCount);
 		        viewer.repaint();
 				break;
 			}
 			
-			try { //Simulate processing each expanded node
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+//			try { //Simulate processing each expanded node
+//				Thread.sleep(1);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 			
 			Node[] children = node.children(maze);
 			for (int i = 0; i < children.length; i++) {

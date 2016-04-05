@@ -125,6 +125,19 @@ public class GameView extends JPanel implements ActionListener
         			}
         			
         		}
+        		else if (maze[row][col].isPathToGoal() == true)
+        		{
+        			//imageIndex = 9;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.pink);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
+        			
+        		}
+        		
         		else if (ch == '?')
         		{
         			imageIndex = 2;;
@@ -158,6 +171,19 @@ public class GameView extends JPanel implements ActionListener
         				
         			}
         		}
+        		else if (maze[currentRow][currentCol].isVisitedByPlayer()== true)
+        		{
+        			//imageIndex = 4;;
+        			if(zoomOut)
+        			{
+        				g2.setColor(Color.ORANGE);
+        				g2.fillRect(x1, y1, size, size);
+        				continue;
+        				
+        			}
+        		}
+        		//model[currentRow][currentCol].setVisitedByPlayer('V');
+        		
         		else if (ch == 'I')//I for Ifrit
         		{
         			

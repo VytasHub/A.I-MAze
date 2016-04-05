@@ -22,11 +22,11 @@ public class RandomWalk implements Traversator
 		boolean complete = false;
 		while(visitCount <= steps && node != null)
 		{	
+			visitCount++;
 			
-		
 			node.setVisited(true);	
 			
-			visitCount++;
+		
 			
 			if (visitCount % 10 == 0) viewer.repaint();
 			//node.isGoalNode()

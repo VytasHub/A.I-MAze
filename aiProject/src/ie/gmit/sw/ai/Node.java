@@ -31,7 +31,31 @@ public class Node
 	private int row = -1;
 	private int col = -1;
 	private int distance;
+	private boolean pathToGoal;
+	//private char visitedByPlayer;
+	private boolean visitedByPlayer;
 	
+	
+
+	
+
+	public boolean isVisitedByPlayer() {
+		return visitedByPlayer;
+	}
+
+	public void setVisitedByPlayer(boolean visitedByPlayer) {
+		this.visitedByPlayer = visitedByPlayer;
+	}
+
+	public boolean isPathToGoal() 
+	{
+		return pathToGoal;
+	}
+
+	public void setPathToGoal(boolean pathToGoal) {
+		this.pathToGoal = pathToGoal;
+	}
+
 	public Node(int row, int col) {
 		this.row = row;
 		this.col = col;
