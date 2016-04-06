@@ -86,4 +86,6 @@ private void createTraversator(){
 ##Fuzzy Logic
 ####fcl/strength.fcl
 ##Threads
-#### Enemy extends TimerTask which is a Tread
+#### Enemy.java
+Enemy extends TimerTask which is a Tread
+
