@@ -8,7 +8,7 @@
 ######RecursiveDFSTraversator
 ######DepthLimitedDFSTraversator
 ######IDDFSTraversator
-All of these algorithms are implemented each enemy using different algorithm
+All of these algorithms are implemented each enemy using different algorithm.Black tile is wall green collectable and red is enemy.
 
 <br>
 <br>
