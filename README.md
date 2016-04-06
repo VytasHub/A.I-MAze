@@ -9,6 +9,9 @@
 ######DepthLimitedDFSTraversator
 ######IDDFSTraversator
 All of these algorithms are implemented each enemy using different algorithm
+
+<br>
+<br>
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/enemys.png)
 ```java
 private void createTraversator(){
