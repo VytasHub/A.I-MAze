@@ -196,6 +196,9 @@ public class GameView extends JPanel implements ActionListener {
 
 					}
 				}
+				
+				
+				
 				// else if (maze[currentRow][currentCol].isVisited())
 				// {
 				// //imageIndex = 9;;

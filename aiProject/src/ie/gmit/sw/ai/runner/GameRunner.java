@@ -224,7 +224,7 @@ public class GameRunner implements KeyListener {
 		// Allows player to collect colectables
 		if (r <= maze.length - 1 && c <= maze[r].length - 1 && maze[r][c].getState() == ' '
 				|| maze[r][c].getState() == '?' || maze[r][c].getState() == 'B' || maze[r][c].getState() == 'H'
-				|| maze[r][c].getState() == 'W') {
+				|| maze[r][c].getState() == 'W'|| maze[r][c].getState() == 'G') {
 			maze[currentRow][currentCol].setVisited(true);
 			// System.out.println("Node set "+
 			// model[currentRow][currentCol].isVisitedByPlayer());
