@@ -13,6 +13,8 @@
                 <attribute name="Class-Path" value="."/>
             </manifest>
             <fileset dir="${dir.jarfile}/bin"/>
+            <fileset dir="C:/plugins"/>
+            <zipfileset excludes="META-INF/*.SF" src="C:/plugins/jFuzzyLogic.jar"/>
         </jar>
     </target>
 </project>
