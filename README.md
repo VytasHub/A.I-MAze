@@ -54,6 +54,35 @@ private void createTraversator(){
 ######BestFirstTraversator
 ######BeamTraversator
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/path.png)
+```java
+private void createTraversator(){
+		switch (bookLvl) {
+		case 0:	// random walk
+			traversator = new BasicHillClimbingTraversator(currentNode, goalNode, globMaze);
+			System.out.println("Created Basic Hill Climber Book");
+			break;
+			
+		case 1:
+			traversator = new SteepestAscentHillClimbingTraversator(currentNode, goalNode, globMaze);
+			System.out.println("CreatedSteepestAscentHillClimbingTraversator Book");
+			break;
+			
+		case 2:
+			traversator = new BestFirstTraversator(currentNode, goalNode, globMaze);
+			System.out.println("Created BestFirstTraversator Book");
+			break;
+			
+		case 3:
+			traversator = new BeamTraversator(currentNode, goalNode, globMaze, 2);
+			System.out.println("Created BeamTraversator Book");
+			break;
+
+		default:
+			System.out.println("Algo error.");
+			break;
+		}
+	}
+```
 ##Fuzzy Logic
 ####fcl/strength.fcl
 ##Threads
