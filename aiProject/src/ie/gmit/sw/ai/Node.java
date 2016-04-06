@@ -37,10 +37,41 @@ public class Node {
 	private boolean pathToGoal;
 	// private char visitedByPlayer;
 	private boolean visitedByPlayer = false;
+	private boolean bookOnTile = false;
 
 	// enemy stuff
 	private Enemy enemy = null;
 	private boolean hasEnemy = false;
+	
+	// book stuff
+	private Book book = null;
+	private boolean hasPath = false;
+
+	
+	
+	public boolean isBookOnTile() {
+		return bookOnTile;
+	}
+
+	public void setBookOnTile(boolean bookOnTile) {
+		this.bookOnTile = bookOnTile;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
+
+	public boolean isHasPath() {
+		return hasPath;
+	}
+
+	public void setHasPath(boolean hasPath) {
+		this.hasPath = hasPath;
+	}
 
 	public Enemy getEnemy() {
 		return enemy;

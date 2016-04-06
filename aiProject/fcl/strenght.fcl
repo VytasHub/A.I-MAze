@@ -10,29 +10,29 @@
 									pcingola@users.sourceforge.net
 */
 
-FUNCTION_BLOCK tipper	// Block definition (there may be more than one block per file)
+FUNCTION_BLOCK outcome	// Block definition (there may be more than one block per file)
 
 VAR_INPUT				// Define input variables
-	service : REAL;
-	food : REAL;
+	health : REAL;
+	luck : REAL;
 END_VAR
 
 VAR_OUTPUT				// Define output variable
-	tip : REAL;
+	result : REAL;
 END_VAR
 
-FUZZIFY service			// Fuzzify input variable 'service': {'poor', 'good' , 'excellent'}
+FUZZIFY health			// Fuzzify input variable 'service': {'poor', 'good' , 'excellent'}
 	TERM poor := (0, 1) (4, 0) ; 
 	TERM good := (1, 0) (4,1) (6,1) (9,0);
 	TERM excellent := (6, 0) (9, 1);
 END_FUZZIFY
 
-FUZZIFY food			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
-	TERM rancid := (0, 1) (1, 1) (3,0) ;
-	TERM delicious := (7,0) (9,1);
+FUZZIFY luck			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
+	TERM low := (0, 1) (1, 1) (3,0) ;
+	TERM high := (7,0) (9,1);
 END_FUZZIFY
 
-DEFUZZIFY tip			// Defzzzify output variable 'tip' : {'cheap', 'average', 'generous' }
+DEFUZZIFY result			// Defzzzify output variable 'tip' : {'cheap', 'average', 'generous' }
 	TERM cheap := (0,0) (5,1) (10,0);
 	TERM average := (10,0) (15,1) (20,0);
 	TERM generous := (20,0) (25,1) (30,0);
@@ -45,9 +45,9 @@ RULEBLOCK No1
 	ACT : MIN;			// Use 'min' activation method
 	ACCU : MAX;			// Use 'max' accumulation method
 
-	RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
-	RULE 2 : IF service IS good THEN tip IS average; 
-	RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
+	RULE 1 : IF health IS poor OR health IS good THEN result IS cheap;
+	RULE 2 : IF health IS good THEN result IS average; 
+	RULE 3 : IF health IS excellent AND luck IS low THEN result IS generous;
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK

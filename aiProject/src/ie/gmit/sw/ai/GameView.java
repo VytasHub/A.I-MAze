@@ -11,7 +11,7 @@ import ie.gmit.sw.ai.runner.GameRunner;
 public class GameView extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	public static final int DEFAULT_VIEW_SIZE = 800;
-	private static final int IMAGE_COUNT = 10; // If adding image need to
+	private static final int IMAGE_COUNT = 11; // If adding image need to
 												// increase by 1
 	private int cellspan = 5;
 	private int cellpadding = 2;
@@ -23,9 +23,11 @@ public class GameView extends JPanel implements ActionListener {
 	private int currentCol;
 	private boolean zoomOut = false;
 	private int imageIndex = -1;
+	private Node goal;
 
 	public GameView(Node[][] maze, Node goal) throws Exception {
 		init();
+		this.goal = goal;
 		this.maze = maze;
 		setBackground(Color.LIGHT_GRAY);
 		setDoubleBuffered(true);
@@ -68,6 +70,7 @@ public class GameView extends JPanel implements ActionListener {
 
 				char tileState = 'X';
 				boolean tileHasEnemy = false;
+				boolean tileHasPath = false;
 
 				//
 				// if (zoomOut) { // zoomed out
@@ -87,11 +90,13 @@ public class GameView extends JPanel implements ActionListener {
 				if (zoomOut) {
 					tileState = maze[row][col].getState();
 					tileHasEnemy = maze[row][col].isHasEnemy();
+					tileHasPath = maze[row][col].isHasPath();
 				}
 				// if zoomed in
 				else {
 					tileState = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].getState();
 					tileHasEnemy = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].isHasEnemy();
+					tileHasPath = maze[currentRow - cellpadding + row][currentCol - cellpadding + col].isHasPath();
 				}
 
 				// if (maze[row][col].isHasEnemy() && zoomOut) { // I for Ifrit
@@ -109,15 +114,18 @@ public class GameView extends JPanel implements ActionListener {
 				// imageIndex = 9;
 				// }
 
-				// tiles
+		
+				
 				if (tileHasEnemy) {
 					if (zoomOut) {
-//						GameRunner.printPos("Enemy Zoomed out: ", new Node(row, col));
+						// GameRunner.printPos("Enemy Zoomed out: ", new
+						// Node(row, col));
 						g2.setColor(Color.RED);
 						g2.fillRect(x1, y1, size, size);
-					}else{
+					} else {
 						imageIndex = 9;
-//						GameRunner.printPos("REGULAR VIEW: ", new Node(row, col));
+						// GameRunner.printPos("REGULAR VIEW: ", new Node(row,
+						// col));
 					}
 				} else if (row == currentRow && col == currentCol) { // character
 																		// (enemy)
@@ -127,24 +135,22 @@ public class GameView extends JPanel implements ActionListener {
 					}
 
 				} else if (tileState == 'X') { // wall (which is hedge)
-					
 
 					if (zoomOut) {
 						g2.setColor(Color.black);
 						g2.fillRect(x1, y1, size, size);
 						// continue;
-					} else{
+					} else {
 						imageIndex = 0;
 					}
 				} else if (tileState == 'W') {
-					
 
 					if (zoomOut) {
 						g2.setColor(Color.green);
 						g2.fillRect(x1, y1, size, size);
 						// continue;
 
-					} else{
+					} else {
 						imageIndex = 1;
 					}
 
@@ -218,7 +224,7 @@ public class GameView extends JPanel implements ActionListener {
 				//
 				// }
 				// }
-				else if (tileState == ' ')// Need to add state for empty tile if
+				else if (tileState == ' ' && tileHasPath == false)// Need to add state for empty tile if
 											// nothing do this
 				{
 					imageIndex = 7;
@@ -239,15 +245,29 @@ public class GameView extends JPanel implements ActionListener {
 					}
 				} else if (tileState == 'E') {
 					imageIndex = enemy_state;
+				} // tiles
+				else if (tileHasPath && tileState == ' ') {
+					if (zoomOut) {
+						// GameRunner.printPos("Enemy Zoomed out: ", new
+						// Node(row, col));
+						g2.setColor(Color.YELLOW);
+						g2.fillRect(x1, y1, size, size);
+					} else {
+						imageIndex = 10;
+						// GameRunner.printPos("REGULAR VIEW: ", new Node(row,
+						// col));
+					}
 				} else {
 					imageIndex = -1;
 				}
+				
+				
 
 				if (!zoomOut) {
 					paintTile(g2, size, x1, y1);
 				}
 
-//				paintEnemy(g2, size, row, col, x1, y1);
+				// paintEnemy(g2, size, row, col, x1, y1);
 			} // for col
 		} // for row
 	} // class
@@ -305,5 +325,6 @@ public class GameView extends JPanel implements ActionListener {
 		images[7] = ImageIO.read(new java.io.File("resources/empty.png"));
 		images[8] = ImageIO.read(new java.io.File("resources/goal.png"));
 		images[9] = ImageIO.read(new java.io.File("resources/Ifrit.png"));
+		images[10] = ImageIO.read(new java.io.File("resources/path.png"));
 	}
 }

@@ -20,7 +20,7 @@ public class TraversatorStats
 			{
 				node.setColor(Color.YELLOW);
 				node.setPathToGoal(true);
-				System.out.println("The path: "+ depth );
+//				System.out.println("The path: "+ depth );
 				
 			}
 			depth++;

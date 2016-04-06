@@ -19,6 +19,23 @@ public class Enemy extends TimerTask {
 	public static int MAX_EVIL = 6;
 
 	private int moveDur;
+	
+	public void kill(){
+		System.out.println("Ouch, I am now reincarnated with 50 health.");
+		health = 50;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+	
+	public void incHealth(int incAmount) {
+		health += incAmount;
+	}
+	
+	public void decHealth(int decAmount) {
+		health -= decAmount;
+	}
 
 	public int getMoveDur() {
 		return moveDur;
@@ -44,7 +61,7 @@ public class Enemy extends TimerTask {
 		this.goalNode = goalNode;
 		this.globMaze = globMaze;
 		this.evilLvl = evilLvl;
-
+		health = 100;
 		moveDur = 666;
 //		GameRunner.printPos("Enemy", goalNode);
 		createTraversator();

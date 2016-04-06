@@ -26,6 +26,8 @@ public class Maze {
 //		addFeature('I', 'X', featureNumber);
 	}
 
+
+	
 	private void init() {
 		for (int row = 0; row < maze.length; row++) {
 			for (int col = 0; col < maze[row].length; col++) {
@@ -59,6 +61,10 @@ public class Maze {
 			int col =random.nextInt(maze[0].length - 4) + 2;
 
 			if (maze[row][col].getState() == replace) {
+				if (feature == '?') {
+					maze[row][col].setBookOnTile(true);
+				}
+				
 				maze[row][col].setState(feature);
 				counter++;
 			}
