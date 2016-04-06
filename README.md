@@ -58,6 +58,8 @@ private void createTraversator(){
 ######BestFirstTraversator
 ######BeamTraversator
 All of these algorithms are implemented whenever you pick a book (help) random algorithm is picked and the path is painted.
+<br>
+<br>
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/path.png)
 ```java
 private void createTraversator(){
