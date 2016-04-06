@@ -8,6 +8,7 @@
 ######RecursiveDFSTraversator
 ######DepthLimitedDFSTraversator
 ######IDDFSTraversator
+All of these algorithms are implemented each enemy using different algorithm
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/enemys.png)
 ```java
 private void createTraversator(){
@@ -53,6 +54,7 @@ private void createTraversator(){
 ######SteepestAscentHillClimbingTraversator
 ######BestFirstTraversator
 ######BeamTraversator
+All of these algorithms are implemented whenever you pick a book (help) random algorithm is picked and the path is painted.
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/path.png)
 ```java
 private void createTraversator(){
