@@ -1,5 +1,7 @@
 # A.I-MAze
+Project can be started by double clicking on the Executable from within the folder as it contains libraries that executable referencing.
 
+Or Project can be downloaded from GitHub and opened in Eclipse and then running the the GameRunner class.
 ##Enemy Algorithms
 ####Enemy.java 
 ######RandomWalk
