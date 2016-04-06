@@ -57,7 +57,7 @@ private void createTraversator(){
 ######SteepestAscentHillClimbingTraversator
 ######BestFirstTraversator
 ######BeamTraversator
-All of these algorithms are implemented whenever you pick a book (help) random algorithm is picked and the path is painted.
+All of these algorithms are implemented whenever you pick a book (help) random algorithm is picked and the path is painted marked with a star
 <br>
 <br>
 ![](https://github.com/VytasHub/A.I-MAze/blob/master/aiProject/pictures/path.png)
