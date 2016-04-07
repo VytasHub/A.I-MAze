@@ -94,6 +94,71 @@ private void createTraversator(){
 ```
 ##Fuzzy Logic
 ####fcl/strength.fcl
+####GameRunner.java
+Fuzzy logic is implemented in GameRunner.java in following method displayed below fuzzyFight()
+<br>
+<br>
+```java
+	private void fuzzyFight() {
+		if (maze[currentRow][currentCol].isHasEnemy()) {
+			// Load from 'FCL' file
+			String fileName = "fcl/strenght.fcl";
+			FIS fis = FIS.load(fileName, true);
+
+			// Error while loading?
+			if (fis == null) {
+				System.err.println("Can't load file: '" + fileName + "'");
+				return;
+			}
+
+			FunctionBlock functionBlock = fis.getFunctionBlock("outcome");
+			// Show
+		
+			Random random = new Random();
+
+			Enemy enemy = maze[currentRow][currentCol].getEnemy();
+
+			// PLAYER SCORE
+			fis.setVariable("health", player.getHealth() / 10);
+			int luck = random.nextInt(10);
+			fis.setVariable("luck", luck);
+			// Evaluate
+			fis.evaluate();
+			// Show output variable's chart
+			Variable outcome = functionBlock.getVariable("result");
+			int damage = (int) outcome.getValue();
+			System.out.println("Player dealt " + damage);
+			enemy.decHealth(damage);
+			// JFuzzyChart.get().chart(outcome, outcome.getDefuzzifier(),
+			// true);// Prints last chart
+
+			// ENEMY SCORE
+			fis.setVariable("health", enemy.getHealth() / 10);
+			luck = random.nextInt(10);
+			fis.setVariable("luck", luck);
+			// Evaluate
+			fis.evaluate();
+			// Show output variable's chart
+			outcome = functionBlock.getVariable("result");
+			damage = (int) outcome.getValue();
+			System.out.println("Enemy dealt " + damage);
+			player.decHealth(damage);
+
+			// AFTER FIGHT
+			System.out.println("Player health: " + player.getHealth());
+			System.out.println("Enemy health: " + enemy.getHealth());
+			
+			if (player.getHealth() <= 0) {
+				player.kill();
+				gameover = true;
+			}
+			
+			if (enemy.getHealth() <= 0) {
+				enemy.kill();
+			}
+		}
+	}
+```
 ##Threads
 #### Enemy.java
 Enemy extends TimerTask which is a Tread
